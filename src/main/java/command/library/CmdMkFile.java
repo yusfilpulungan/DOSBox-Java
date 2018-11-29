@@ -22,13 +22,24 @@ class CmdMkFile extends Command {
 		String fileName = this.getParameterAt(0);
                 File newFile;
                 String fileContent;
-                if(this.getParameterCount()==2){
-                    fileContent = this.getParameterAt(1);
-                    newFile = new File(fileName, fileContent);
-                }else{
-                    newFile = new File(fileName, "");
+                
+                Boolean check=true;
+                for (int i = 0; i < this.getDrive().getCurrentDirectory().getNumberOfContainedFiles(); i++) {
+                    if(this.getDrive().getCurrentDirectory().getContent().get(i).getName().equals(fileName)){
+                        check = false;
+                    }
                 }
-		
-		this.getDrive().getCurrentDirectory().add(newFile);
+                if(check){
+                    if(this.getParameterCount()==2){
+                        fileContent = this.getParameterAt(1);
+                        newFile = new File(fileName, fileContent);
+                    }else{
+                        newFile = new File(fileName, "");
+                    }
+
+                    this.getDrive().getCurrentDirectory().add(newFile);
+                }else{
+                    System.err.println("Error: File dengan nama yang sama sudah ada di directory");
+                }
 	}
 }
