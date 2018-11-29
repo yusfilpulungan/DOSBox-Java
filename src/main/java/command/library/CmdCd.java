@@ -18,7 +18,7 @@ import filesystem.FileSystemItem;
 class CmdCd extends Command {
 	
 	private static final String SYSTEM_CANNOT_FIND_THE_PATH_SPECIFIED = "The system cannot find the path specified";
-    private static final String DESTINATION_IS_FILE = "The directory name is invalid.";
+        private static final String DESTINATION_IS_FILE = "The directory name is invalid.";
 	private Directory destinationDirectory;
 
 	protected CmdCd(String name, IDrive drive) {

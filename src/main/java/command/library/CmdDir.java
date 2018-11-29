@@ -70,11 +70,11 @@ class CmdDir extends Command {
         {
             if (item.isDirectory())
             {
-                outputter.print("<DIR>");
+                outputter.print(item.getDate()+" <DIR>");
             }
             else
             {
-                outputter.print("" + item.getSize());
+                outputter.print("" + item.getDate());
             }
 
             outputter.print("\t" + item.getName());

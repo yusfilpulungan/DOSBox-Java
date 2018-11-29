@@ -57,7 +57,7 @@ class CmdMkDir extends Command {
 
     private static void CreateDirectory(String newDirectoryName, IDrive drive) {
         Boolean check=true;
-        for (int i = 0; i < drive.getCurrentDirectory().getNumberOfContainedDirectories(); i++) {
+        for (int i = 0; i < drive.getCurrentDirectory().getContent().size(); i++) {
             if(drive.getCurrentDirectory().getContent().get(i).isDirectory()){
                 if(drive.getCurrentDirectory().getContent().get(i).getName().equals(newDirectoryName)){
                     check = false;
