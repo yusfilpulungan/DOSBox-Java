@@ -50,6 +50,9 @@ public class Console {
 			}
 			
 			this.outputter.resetStatistics();
+                        if(line.trim().equalsIgnoreCase("exit gugus")){
+                            
+                        break;}
 			invoker.executeCommand(line, this.outputter);
 		}
 		this.outputter.printLine("\nGoodbye!");
