@@ -68,8 +68,9 @@ public class CommandInvoker implements IExecuteCommand {
 					return;
 				}
 			}
+                        if(command.trim().equalsIgnoreCase("exit")==false||command.trim().equalsIgnoreCase("exit gugus")){
 			outputter.printLine("\'" + cmdName + "\' is not recognized as an internal or external command,");
-			outputter.printLine("operable program or batch file.");
+			outputter.printLine("operable program or batch file.");}
 		}
 		catch(Exception e) {
 			if(e.getMessage() != null) {
