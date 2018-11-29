@@ -2,8 +2,7 @@
  * DOSBox, Scrum.org, Professional Scrum Developer Training
  * Authors: Rainer Grau, Daniel Tobler, Zuehlke Technology Group
  * Copyright (c) 2013 All Right Reserved
- */ 
-
+ */
 package command.library;
 
 import interfaces.IDrive;
@@ -11,7 +10,9 @@ import interfaces.IOutputter;
 import command.framework.Command;
 import filesystem.Directory;
 
+
 class CmdMkDir extends Command {
+
     private static final String PARAMETER_CONTAINS_BACKLASH = "At least one parameter denotes a path rather than a directory name.";
 
     public CmdMkDir(String name, IDrive drive) {
@@ -26,10 +27,10 @@ class CmdMkDir extends Command {
 
     @Override
     protected boolean checkParameterValues(IOutputter outputter) {
-        for(int i=0 ; i<getParameterCount() ; i++)
-        {
-            if (parameterContainsBacklashes(getParameterAt(i), outputter))
+        for (int i = 0; i < getParameterCount(); i++) {
+            if (parameterContainsBacklashes(getParameterAt(i), outputter)) {
                 return false;
+            }
         }
 
         return true;
@@ -37,8 +38,7 @@ class CmdMkDir extends Command {
 
     private static boolean parameterContainsBacklashes(String parameter, IOutputter outputter) {
         // Do not allow "mkdir c:\temp\dir1" to keep the command simple
-        if (parameter.contains("\\") || parameter.contains("/"))
-        {
+        if (parameter.contains("\\") || parameter.contains("/")) {
             outputter.printLine(PARAMETER_CONTAINS_BACKLASH);
             return true;
         }
@@ -47,14 +47,29 @@ class CmdMkDir extends Command {
 
     @Override
     public void execute(IOutputter outputter) {
-        for(int i=0 ; i<getParameterCount() ; i++)
-        {
-            CreateDirectory(getParameterAt(i), this.getDrive());
+        
+            for (int i = 0; i < getParameterCount(); i++) {
+                
+                CreateDirectory(getParameterAt(i), this.getDrive());
+            }
+
         }
-    }
 
     private static void CreateDirectory(String newDirectoryName, IDrive drive) {
-        Directory newDirectory = new Directory(newDirectoryName);
-        drive.getCurrentDirectory().add(newDirectory);
+        Boolean check=true;
+        for (int i = 0; i < drive.getCurrentDirectory().getNumberOfContainedDirectories(); i++) {
+            if(drive.getCurrentDirectory().getContent().get(i).isDirectory()){
+                if(drive.getCurrentDirectory().getContent().get(i).getName().equals(newDirectoryName)){
+                    check = false;
+                }
+            }
+        }
+        
+        if(check){
+            Directory newDirectory = new Directory(newDirectoryName);
+            drive.getCurrentDirectory().add(newDirectory);
+        }else{
+            System.err.println("Error: Directori dengan nama yang sama sudah ada di directory");
+        }
     }
 }
