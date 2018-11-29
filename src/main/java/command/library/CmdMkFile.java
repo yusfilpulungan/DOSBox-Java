@@ -24,9 +24,11 @@ class CmdMkFile extends Command {
                 String fileContent;
                 
                 Boolean check=true;
-                for (int i = 0; i < this.getDrive().getCurrentDirectory().getNumberOfContainedFiles(); i++) {
-                    if(this.getDrive().getCurrentDirectory().getContent().get(i).getName().equals(fileName)){
-                        check = false;
+                for (int i = 0; i < this.getDrive().getCurrentDirectory().getContent().size(); i++) {
+                    if(!this.getDrive().getCurrentDirectory().getContent().get(i).isDirectory()){
+                        if(this.getDrive().getCurrentDirectory().getContent().get(i).getName().equals(fileName)){
+                            check = false;
+                        }
                     }
                 }
                 if(check){
