@@ -7,6 +7,7 @@
 package filesystem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**This class abstracts File and Directory.
  * Composite-Pattern: Component
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public abstract class FileSystemItem {
 
 	private String name;
+        private String date;
 	private Directory parent;
 	private static final String ILLEGAL_ARGUMENT_TEXT = "Error: A file or directory name may not contain '/', '\', ',', ' ' or ':'";
 	
@@ -36,6 +38,7 @@ public abstract class FileSystemItem {
 			throw new IllegalArgumentException(name + " - " + ILLEGAL_ARGUMENT_TEXT);
 		}
 		this.name = name;
+                this.date = new Date().toString();
 		this.parent = parent;
 	}
 
@@ -92,6 +95,14 @@ public abstract class FileSystemItem {
 		return getPath();
 	}
 
+        public void setDate(String date){
+            this.date=date;
+        }
+        
+        public String getDate(){
+            return this.date;
+        }
+        
 	/** Returns the content of the item.
 	 * @return - the list of contained files and directories if isDirectory() == true
 	 *         - null if isDirectory() == false 
