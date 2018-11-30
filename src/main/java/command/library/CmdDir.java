@@ -2,8 +2,7 @@
  * DOSBox, Scrum.org, Professional Scrum Developer Training
  * Authors: Rainer Grau, Daniel Tobler, Zuehlke Technology Group
  * Copyright (c) 2013 All Right Reserved
- */ 
-
+ */
 package command.library;
 
 import java.util.ArrayList;
@@ -14,7 +13,8 @@ import filesystem.Directory;
 import filesystem.FileSystemItem;
 
 class CmdDir extends Command {
-    private static final String SYSTEM_CANNOT_FIND_THE_PATH_SPECIFIED = "File Not Found"; 
+
+    private static final String SYSTEM_CANNOT_FIND_THE_PATH_SPECIFIED = "File Not Found";
     private Directory directoryToPrint;
 
     public CmdDir(String name, IDrive drive) {
@@ -28,12 +28,9 @@ class CmdDir extends Command {
 
     @Override
     protected boolean checkParameterValues(IOutputter outputter) {
-        if (getParameterCount() == 0)
-        {
+        if (getParameterCount() == 0) {
             directoryToPrint = getDrive().getCurrentDirectory();
-        }
-        else
-        {
+        } else {
             this.directoryToPrint = checkAndPreparePathParameter(getParameterAt(0), outputter);
         }
         return this.directoryToPrint != null;
@@ -41,23 +38,32 @@ class CmdDir extends Command {
 
     private Directory checkAndPreparePathParameter(String pathName, IOutputter outputter) {
         FileSystemItem fsi = getDrive().getItemFromPath(pathName);
-        if (fsi == null)
-        {
+        if (fsi == null) {
             outputter.printLine(SYSTEM_CANNOT_FIND_THE_PATH_SPECIFIED);
             return null;
         }
-        if (!fsi.isDirectory())
-        {
+        if (!fsi.isDirectory()) {
             return fsi.getParent();
         }
-        return (Directory)fsi;
+        return (Directory) fsi;
     }
 
     @Override
     public void execute(IOutputter outputter) {
-        printHeader(this.directoryToPrint, outputter);
-        printContent(this.directoryToPrint.getContent(), outputter);
-        printFooter(this.directoryToPrint, outputter);
+        if (this.getParameterCount() == 0) {
+            printHeader(this.directoryToPrint, outputter);
+            printContent(this.directoryToPrint.getContent(), outputter);
+            printFooter(this.directoryToPrint, outputter);
+        }else{
+            FileSystemItem fsi = getDrive().getItemFromPath(getParameterAt(0));
+            if (!fsi.isDirectory()) {
+                outputter.print("" + fsi.getDate() + "\t" + fsi.getSize());
+            }else{
+                outputter.print(fsi.getDate() + " <DIR>");
+            }
+            outputter.print("\t" + fsi.getName());
+            outputter.newLine();
+        }
     }
 
     private static void printHeader(Directory directoryToPrint, IOutputter outputter) {
@@ -66,15 +72,11 @@ class CmdDir extends Command {
     }
 
     private static void printContent(ArrayList<FileSystemItem> directoryContent, IOutputter outputter) {
-        for (FileSystemItem item : directoryContent)
-        {
-            if (item.isDirectory())
-            {
-                outputter.print(item.getDate()+" <DIR>");
-            }
-            else
-            {
-                outputter.print("" + item.getDate());
+        for (FileSystemItem item : directoryContent) {
+            if (item.isDirectory()) {
+                outputter.print(item.getDate() + " <DIR>");
+            } else {
+                outputter.print("" + item.getDate() + "\t" + item.getSize());
             }
 
             outputter.print("\t" + item.getName());

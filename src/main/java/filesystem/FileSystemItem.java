@@ -6,6 +6,8 @@
 
 package filesystem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,6 +32,7 @@ public abstract class FileSystemItem {
 
 	private String name;
         private String date;
+        private String contentFile;
 	private Directory parent;
 	private static final String ILLEGAL_ARGUMENT_TEXT = "Error: A file or directory name may not contain '/', '\', ',', ' ' or ':'";
 	
@@ -38,7 +41,9 @@ public abstract class FileSystemItem {
 			throw new IllegalArgumentException(name + " - " + ILLEGAL_ARGUMENT_TEXT);
 		}
 		this.name = name;
-                this.date = new Date().toString();
+                Date date=new Date();
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+                this.date = dateFormat.format(date).toString();
 		this.parent = parent;
 	}
 
@@ -101,6 +106,14 @@ public abstract class FileSystemItem {
         
         public String getDate(){
             return this.date;
+        }
+        
+        public void setContentFile(String contentFile){
+            this.contentFile=contentFile;
+        }
+        
+        public String getContentFile(){
+            return this.contentFile;
         }
         
 	/** Returns the content of the item.
