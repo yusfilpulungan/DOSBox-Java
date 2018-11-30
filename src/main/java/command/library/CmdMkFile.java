@@ -20,12 +20,12 @@ class CmdMkFile extends Command {
     @Override
     public void execute(IOutputter outputter) {
         String fileName = this.getParameterAt(0);
-        checkFileName(checkItem(fileName), fileName, outputter);
+        checkFileName(fileName, outputter);
     }
 
-    private void checkFileName(Boolean check, String fileName, IOutputter outputter) {
+    private void checkFileName(String fileName, IOutputter outputter) {
         File newFile;
-        if (check) {
+        if (checkItem(fileName)) {
             add(fileName);
         } else {
             outputter.print("Error: File dengan nama yang sama sudah ada di directory");
