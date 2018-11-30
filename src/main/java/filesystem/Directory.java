@@ -53,6 +53,9 @@ public class Directory extends FileSystemItem {
 		}
 		fileToAdd.setParent(this);
 	}
+        public void delete(int index) {
+		this.content.remove(index);
+	}
 
 	private static boolean removeParent(FileSystemItem item) {
 		return item.getParent().content.remove(item);

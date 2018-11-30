@@ -32,6 +32,8 @@ public class CommandFactory {
                 this.commands.add(new CmdTime("time", drive));
                 this.commands.add(new CmdHelp("help", drive));
                 this.commands.add(new CmdVer("ver", drive));
+                this.commands.add(new CmdVer("ver", drive));
+                this.commands.add(new CmdDel("del", drive));
 
 		// Add your commands here
 		
